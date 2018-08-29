@@ -5,6 +5,15 @@ const BASEURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-ke
 export default {
   search: function(query){
     return axios.get(BASEURL + query)
+  },
+  find: function(){
+    return axios.get("/api/articles")
+  },
+  insert: function(articleData){
+    return axios.get("/api/articles", articleData)
+  },
+  delete: function(id){
+    return axios.get("/api/articles/" + id)
   }
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "../Grid";
+import "./recipe.css";
 
 // RecipeListItem renders a bootstrap list item containing data from the recipe api call
 export const RecipeListItem = props => (
@@ -9,7 +10,7 @@ export const RecipeListItem = props => (
         <Col size="xs-8 sm-9">
           <h3>{props.title}</h3>
           <p>
-            Summary:{props.summary}
+            Summary: {props.summary}
           </p>
           <a
             rel="noreferrer noopener"
@@ -17,7 +18,12 @@ export const RecipeListItem = props => (
             href={props.href}
           >
             Go to article!
-          </a> <button>Save Article</button>
+          </a> <button 
+          className="save-button"
+          onClick={props.handleOnClick}
+          >
+          Save This Article
+          </button>
         </Col>
       </Row>
     </Container>
