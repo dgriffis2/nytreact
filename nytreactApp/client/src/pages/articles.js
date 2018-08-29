@@ -5,11 +5,13 @@ import Button from "../components/Button";
 import API from "../utils/API";
 import { RecipeList, RecipeListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
+import { ArticleList, ArticleListItem } from "../components/SavedArticleList"
 
 class Articles extends Component {
   state = {
     articles: [],
-    search: ""
+    search: "",
+    savedArticles: []
   };
 
   componentDidMount() {
@@ -39,8 +41,12 @@ class Articles extends Component {
   };
 
   handleOnClick = () => {
-     console.log("beep")
-  }
+    console.log("beep")
+  };
+
+  removeSaved = () => {
+    console.log("delete beep")
+  };
 
   render() {
     return (
@@ -77,23 +83,39 @@ class Articles extends Component {
           <Row>
             <Col size="xs-12">
               <h1>New York Times Articles:</h1>
-            <RecipeList>
-            {this.state.articles.map(article => (
-          <RecipeListItem
-            key={article.headline.main}
-            title={article.headline.main}
-            href={article.web_url}
-            summary={article.snippet}
-            handleOnClick={this.handleOnClick}
-          />
-        ))}
-            </RecipeList>
+              <RecipeList>
+                {this.state.articles.map(article => (
+                  <RecipeListItem
+                    key={article.headline.main}
+                    title={article.headline.main}
+                    href={article.web_url}
+                    summary={article.snippet}
+                    handleOnClick={this.handleOnClick}
+                  />
+                ))}
+              </RecipeList>
+            </Col>
+          </Row>
+          <Row>
+            <Col size="xs-12">
+              <h1>Saved Articles:</h1>
+              <ArticleList>
+                {this.state.articles.map(article => (
+                  <ArticleListItem
+                    key={article.headline.main}
+                    title={article.headline.main}
+                    href={article.web_url}
+                    summary={article.snippet}
+                    removeSaved={this.removeSaved}
+                  />
+                ))}
+              </ArticleList>
             </Col>
           </Row>
         </Container>
       </div>
     );
-  } 
+  }
 }
 
 export default Articles;
