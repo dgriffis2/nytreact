@@ -10,10 +10,10 @@ export default {
     return axios.get("/api/articles")
   },
   insert: function(articleData){
-    return axios.get("/api/articles", articleData)
+    return axios.post("/api/articles", articleData)
   },
   delete: function(id){
-    return axios.get("/api/articles/" + id)
+    return axios.delete("/api/articles/" + id)
   }
 }
 

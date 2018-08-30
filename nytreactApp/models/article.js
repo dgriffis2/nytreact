@@ -7,6 +7,6 @@ const artSchema = new Schema({
   url: { type: String, required: true },
 });
 
-const Article = mongoose.model("Book", artSchema);
+const Article = mongoose.model("Article", artSchema);
 
 module.exports = Article;

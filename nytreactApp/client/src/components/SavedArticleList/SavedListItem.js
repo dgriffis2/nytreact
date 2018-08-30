@@ -22,7 +22,7 @@ export const ArticleListItem = props => (
           className="save-button"
           onClick={props.removeSaved}
           >
-          Save This Article
+          Remove This Article
           </button>
         </Col>
       </Row>

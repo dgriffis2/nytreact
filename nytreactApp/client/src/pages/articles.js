@@ -16,6 +16,7 @@ class Articles extends Component {
 
   componentDidMount() {
     this.searchArticle("shrek");
+    this.displaySaved();
   }
 
 
@@ -34,18 +35,29 @@ class Articles extends Component {
       .catch(err => console.log(err));
   };
 
+  displaySaved = () => {
+    API.find({})
+    .then(res => {this.setState({savedArticles: res.data})})
+    .catch(err => {console.log(err)})
+  };
+
   handleFormSubmit = event => {
     event.preventDefault();
     this.searchArticle(this.state.search);
-    console.log(this.state.articles)
   };
 
-  handleOnClick = () => {
-    console.log("beep")
+  handleOnClick = (index) => {
+    let article = this.state.articles[index]
+    API.insert({title: article.headline.main, summary: article.snippet, url: article.web_url})
+    .then(() => this.displaySaved())
+    .catch(err => {console.log(err)})
   };
 
-  removeSaved = () => {
-    console.log("delete beep")
+  removeSaved = (id) => {
+    API.delete(id)
+    // fat arrow .then() calls
+    .then(()=>this.displaySaved())
+    .catch(err => {console.log(err)})
   };
 
   render() {
@@ -84,13 +96,13 @@ class Articles extends Component {
             <Col size="xs-12">
               <h1>New York Times Articles:</h1>
               <RecipeList>
-                {this.state.articles.map(article => (
+                {this.state.articles.map((article,index) => (
                   <RecipeListItem
-                    key={article.headline.main}
+                    key={index}
                     title={article.headline.main}
                     href={article.web_url}
                     summary={article.snippet}
-                    handleOnClick={this.handleOnClick}
+                    handleOnClick={()=>this.handleOnClick(index)}
                   />
                 ))}
               </RecipeList>
@@ -100,13 +112,13 @@ class Articles extends Component {
             <Col size="xs-12">
               <h1>Saved Articles:</h1>
               <ArticleList>
-                {this.state.articles.map(article => (
+                {this.state.savedArticles.map((savedArticles,index) => (
                   <ArticleListItem
-                    key={article.headline.main}
-                    title={article.headline.main}
-                    href={article.web_url}
-                    summary={article.snippet}
-                    removeSaved={this.removeSaved}
+                    key={index}
+                    title={savedArticles.title}
+                    href={savedArticles.url}
+                    summary={savedArticles.summary}
+                    removeSaved={()=>this.removeSaved(savedArticles._id)}
                   />
                 ))}
               </ArticleList>
